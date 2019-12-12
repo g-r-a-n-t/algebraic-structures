@@ -46,3 +46,6 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - algebraic-structures
+    - hspec >=2.6 && < 3
+    - QuickCheck >= 2.12 && < 3
+    - modular-arithmetic > 1.2
