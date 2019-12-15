@@ -14,31 +14,31 @@ n0_7 = [0..7] :: [Integer]
 
 spec :: Spec
 spec = do
-  describe "Closure" $ do
+  describe "Closure verification" $ do
     it "returns true for integers mod 7 over addition." $ do
       ver (Closure (+) n7) `shouldBe` True
     it "returns false for integers 0 through 7 over addition." $ do
       ver (Closure (+) n0_7) `shouldBe` False
 
-  describe "Associativity" $ do
+  describe "Associativity verification" $ do
     it "returns true for integers 0 through 7 over addition." $ do
       ver (Associativity (+) n0_7) `shouldBe` True
     it "returns false for integers 0 through 7 over exponentiation." $ do
       ver (Associativity (^) n0_7) `shouldBe` False
 
-  describe "Commutativity" $ do
+  describe "Commutativity verification" $ do
     it "returns true for integers 0 through 7 over addition." $ do
       ver (Commutativity (+) n0_7) `shouldBe` True
     it "returns false for integers 0 through 7 over exponentiation." $ do
       ver (Commutativity (^) n0_7) `shouldBe` False
 
-  describe "Identity" $ do
+  describe "Identity verification" $ do
     it "returns true for integers mod 7 over addition." $ do
       ver (Identity (+) n7) `shouldBe` True
     it "returns false for integers mod 7 without 0 over addition." $ do
       ver (Identity (+) n7') `shouldBe` False
 
-  describe "Invertibility" $ do
+  describe "Invertibility verification" $ do
     it "returns true for integers mod 7 over addition." $ do
       ver (Invertibility (+) n7) `shouldBe` True
     it "returns false for integers mod 7 over multiplication." $ do
