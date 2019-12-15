@@ -8,7 +8,7 @@ import AlgebraicStructures.Structures
 import AlgebraicStructures.Base
 import Data.Modular
 
-n7 = [0..6] :: Mod Integer 7
+n7 = [0..6] :: [Mod Integer 7]
 g = Group (+) n7
 
 isGroup = ver g -- True
