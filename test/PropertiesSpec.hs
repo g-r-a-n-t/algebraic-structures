@@ -9,24 +9,37 @@ import AlgebraicStructures.Properties
 import AlgebraicStructures.Base
 
 n7 = [0..6] :: [Mod Integer 7]
+n7' = [1..6] :: [Mod Integer 7]
 n0_7 = [0..7] :: [Integer]
 
 spec :: Spec
 spec = do
-  describe "Closed Addition" $ do
+  describe "Closure" $ do
     it "returns true for integers mod 7 over addition." $ do
       ver (Closure (+) n7) `shouldBe` True
     it "returns false for integers 0 through 7 over addition." $ do
       ver (Closure (+) n0_7) `shouldBe` False
 
-  describe "Associative Addition" $ do
+  describe "Associativity" $ do
     it "returns true for integers 0 through 7 over addition." $ do
       ver (Associativity (+) n0_7) `shouldBe` True
     it "returns false for integers 0 through 7 over exponentiation." $ do
       ver (Associativity (^) n0_7) `shouldBe` False
 
-  describe "Commutative Addition" $ do
+  describe "Commutativity" $ do
     it "returns true for integers 0 through 7 over addition." $ do
       ver (Commutativity (+) n0_7) `shouldBe` True
     it "returns false for integers 0 through 7 over exponentiation." $ do
       ver (Commutativity (^) n0_7) `shouldBe` False
+
+  describe "Identity" $ do
+    it "returns true for integers mod 7 over addition." $ do
+      ver (Identity (+) n7) `shouldBe` True
+    it "returns false for integers mod 7 without 0 over addition." $ do
+      ver (Identity (+) n7') `shouldBe` False
+
+  describe "Invertibility" $ do
+    it "returns true for integers mod 7 over addition." $ do
+      ver (Invertibility (+) n7) `shouldBe` True
+    it "returns false for integers mod 7 over multiplication." $ do
+      ver (Invertibility (+) n7') `shouldBe` False
