@@ -15,6 +15,9 @@ data GroupLike a =
   -- Quasigroup   (a -> a -> a) [a] | -- a magma obeying the latin square property. TODO: Add latin square property
   -- Loop         (a -> a -> a) [a]   -- A quasigroup with identity.
 
+data RingLike a =
+  Semiring (a -> a -> a) (a -> a -> a) [a]
+
 instance Eq a => Ver (GroupLike a) where
   ver (Magma        f d) = all ver [Closure f d]
   ver (Semigroup    f d) = all ver [Closure f d, Associativity f d]

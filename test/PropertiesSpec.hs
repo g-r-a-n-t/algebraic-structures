@@ -42,4 +42,10 @@ spec = do
     it "returns true for integers mod 7 over addition." $ do
       ver (Invertibility (+) n7) `shouldBe` True
     it "returns false for integers mod 7 over multiplication." $ do
-      ver (Invertibility (+) n7') `shouldBe` False
+      ver (Invertibility (*) n7) `shouldBe` False
+
+  describe "Distributivity verification" $ do
+    it "returns true for integers mod 7 over addition and multiplication." $ do
+      ver (Distributivity (+) (*) n7) `shouldBe` True
+    it "returns false for integers mod 7 over addition and exponentiation." $ do
+      ver (Distributivity (+) (^) n7) `shouldBe` False
