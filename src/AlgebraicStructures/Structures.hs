@@ -19,9 +19,13 @@ data RingLike a =
   Semiring (a -> a -> a) (a -> a -> a) [a]
 
 instance Eq a => Ver (GroupLike a) where
-  ver (Magma        f d) = all ver [Closure f d]
-  ver (Semigroup    f d) = all ver [Closure f d, Associativity f d]
-  ver (Monoid       f d) = all ver [Closure f d, Associativity f d, Identity f d]
-  ver (Group        f d) = all ver [Closure f d, Associativity f d, Identity f d, Invertibility f d]
-  ver (AbelianGroup f d) = all ver [Closure f d, Associativity f d, Identity f d, Invertibility f d, Commutativity f d]
-  ver (Semilattice  f d) = all ver [Closure f d, Associativity f d, Idempotency f d, Commutativity f d]
+  ver (Magma        (+) d) = all ver [Closure (+) d]
+  ver (Semigroup    (+) d) = all ver [Closure (+) d, Associativity (+) d]
+  ver (Monoid       (+) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d]
+  ver (Group        (+) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d, Invertibility (+) d]
+  ver (AbelianGroup (+) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d, Invertibility (+) d, Commutativity (+) d]
+  ver (Semilattice  (+) d) = all ver [Closure (+) d, Associativity (+) d, Idempotency (+) d, Commutativity (+) d]
+
+instance Eq a => Ver (RingLike a) where
+  ver (Semiring (+) (*) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d, Commutativity (+) d,
+                                      Closure (*) d, Associativity (*) d, Identity (*) d, Distributivity (+) (*) d]

@@ -15,12 +15,12 @@ data Property a =
   Distributivity  (a -> a -> a) (a -> a -> a) [a]
 
 instance Eq a => Ver (Property a) where
-  ver (Closure        (*) d) = and [elem (a * b) d | a <- d, b <- d]
-  ver (Associativity  (*) d) = and [(a * b) * c == a * (b * c) | a <- d, b <- d, c <- d]
-  ver (Commutativity  (*) d) = and [a * b == b * a | a <- d, b <- d]
-  ver (Identity       (*) d) = isJust (identity (*) d)
-  ver (Invertibility  (*) d) = fmap (\e -> all (\a -> any (\b -> a * b == e) d) d) (identity (*) d) == Just True
-  ver (Idempotency    (*) d) = all (\x -> x * x == x) d
+  ver (Closure        (+) d) = and [elem (a + b) d | a <- d, b <- d]
+  ver (Associativity  (+) d) = and [(a + b) + c == a + (b + c) | a <- d, b <- d, c <- d]
+  ver (Commutativity  (+) d) = and [a + b == b + a | a <- d, b <- d]
+  ver (Identity       (+) d) = isJust (identity (+) d)
+  ver (Invertibility  (+) d) = fmap (\e -> all (\a -> any (\b -> a + b == e) d) d) (identity (+) d) == Just True
+  ver (Idempotency    (+) d) = all (\x -> x + x == x) d
   ver (Distributivity (+) (*) d) = and [a * (b + c) == (a * b) + (a * c) | a <- d, b <- d, c <- d]
 
 identity :: Eq a => (a -> a -> a) -> [a] -> Maybe a
