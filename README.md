@@ -19,14 +19,9 @@ ver (Group (+) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d,
 In practice this can be used to verify something like the group integers modulo 7 over addition.
 
 ```haskell
-import AlgebraicStructures.Structures
-import AlgebraicStructures.Base
-import Data.Modular
-
 n7 = [0..6] :: [Mod Integer 7]
-g = Group (+) n7
-
-isGroup = ver g -- True
+ver $ Group (+) n7
+-- True
 ```
 
 The following structures are currently supported:

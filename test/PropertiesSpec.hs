@@ -49,3 +49,9 @@ spec = do
       ver (Distributivity (+) (*) n7) `shouldBe` True
     it "returns false for integers mod 7 over addition and exponentiation." $ do
       ver (Distributivity (+) (^) n7) `shouldBe` False
+
+  describe "Absorbing zero verification" $ do
+    it "returns true for integers mod 7 over addition and multiplication." $ do
+      ver (AbsorbingZero (+) (*) n7) `shouldBe` True
+    it "returns false for integers mod 7 over addition and exponentiation." $ do
+      ver (AbsorbingZero (+) (^) n7) `shouldBe` False
