@@ -18,7 +18,9 @@ data GroupLike a =
 data RingLike a =
   Semiring (a -> a -> a) (a -> a -> a) [a] |
   Nearring (a -> a -> a) (a -> a -> a) [a] |
-  Ring     (a -> a -> a) (a -> a -> a) [a]
+  Ring     (a -> a -> a) (a -> a -> a) [a] |
+  LieRing  (a -> a -> a) (a -> a -> a) [a] |
+  BoolRing (a -> a -> a) (a -> a -> a) [a]
 
 instance Eq a => Ver (GroupLike a) where
   ver (Magma        (+) d) = all ver [Closure (+) d]
@@ -35,3 +37,7 @@ instance Eq a => Ver (RingLike a) where
                              all ver [Distributivity (+) (*) d, AbsorbingZero (+) (*) d]
   ver (Ring     (+) (*) d) = all ver [AbelianGroup (+) d, Monoid (*) d] &&
                              all ver [Distributivity (+) (*) d, AbsorbingZero (+) (*) d]
+  ver (LieRing  (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
+                             all ver [Distributivity (+) (*) d, JacobiIdentity (+) (*) d]
+  ver (BoolRing (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
+                             all ver [Distributivity (+) (*) d, Idempotency (*) d]
