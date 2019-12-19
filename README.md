@@ -24,5 +24,36 @@ ver $ Group (+) n7
 -- True
 ```
 
-The following structures are currently supported:
-- Group-like: Magma, Semigroup, Monoid, Group, AbelianGroup, Semilattice
+The following properties and structures are currently supported:
+
+**Properties**
+- Closure
+- Associativity
+- Commutativity
+- Identity
+- Invertibility
+- Idempotency
+- Distributivity
+- AbsorbingZero
+
+**Group-like structures:**
+- Magma
+- Semigroup
+- Monoid
+- Group
+- AbelianGroup
+- Semilattice
+
+**Ring-like structures:**
+- Semiring
+- Nearring
+- Ring
+
+The qualities of these structures can easily be understood by looking at the source, which is why using a declarative language is useful here.
+
+Take a ring for example:
+
+```haskell
+ver (Ring (+) (*) d) = all ver [AbelianGroup (+) d, Monoid (*) d] &&
+                       all ver [Distributivity (+) (*) d, AbsorbingZero (+) (*) d]
+```
