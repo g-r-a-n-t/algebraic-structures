@@ -2,6 +2,12 @@
 
 This library provides types for various algebraic structures and properties and allows you to easily verify them (if reasonably small).
 
+**Build and test**
+```sh
+stack build
+stack test
+```
+
 The structure and property types provided here are both instances of a typeclass called *Ver*. The Ver typeclass contains a function `ver` (`a -> Bool`) which verifies the integrity of its underlying value.
 
 Take for example the associative property. If we have some function and a finite domain, we can verify that the associative property holds over all elements.
