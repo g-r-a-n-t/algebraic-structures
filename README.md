@@ -48,6 +48,9 @@ The following properties and structures are currently supported:
 - Semiring
 - Nearring
 - Ring
+- LieRing
+- BoolRing
+- Field
 
 The qualities of these structures can easily be understood by looking at the source, which is why using a declarative language is useful here.
 

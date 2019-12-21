@@ -20,7 +20,8 @@ data RingLike a =
   Nearring (a -> a -> a) (a -> a -> a) [a] |
   Ring     (a -> a -> a) (a -> a -> a) [a] |
   LieRing  (a -> a -> a) (a -> a -> a) [a] |
-  BoolRing (a -> a -> a) (a -> a -> a) [a]
+  BoolRing (a -> a -> a) (a -> a -> a) [a] |
+  Field    (a -> a -> a) (a -> a -> a) [a]
 
 instance Eq a => Ver (GroupLike a) where
   ver (Magma        (+) d) = all ver [Closure (+) d]
@@ -41,3 +42,5 @@ instance Eq a => Ver (RingLike a) where
                              all ver [Distributivity (+) (*) d, JacobiIdentity (+) (*) d]
   ver (BoolRing (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
                              all ver [Distributivity (+) (*) d, Idempotency (*) d]
+  ver (Field    (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
+                             all ver [Distributivity (+) (*) d, MultInvertibility (+) (*) d]

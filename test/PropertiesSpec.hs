@@ -47,11 +47,17 @@ spec = do
   describe "Distributivity verification" $ do
     it "returns true for integers mod 7 over addition and multiplication." $ do
       ver (Distributivity (+) (*) n7) `shouldBe` True
-    it "returns false for integers mod 7 over addition and exponentiation." $ do
-      ver (Distributivity (+) (^) n7) `shouldBe` False
+    it "returns false for integers mod 7 over addition and subtraction." $ do
+      ver (Distributivity (+) (-) n7) `shouldBe` False
 
   describe "Absorbing zero verification" $ do
     it "returns true for integers mod 7 over addition and multiplication." $ do
       ver (AbsorbingZero (+) (*) n7) `shouldBe` True
-    it "returns false for integers mod 7 over addition and exponentiation." $ do
-      ver (AbsorbingZero (+) (^) n7) `shouldBe` False
+    it "returns false for integers mod 7 over addition and addition." $ do
+      ver (AbsorbingZero (+) (+) n7) `shouldBe` False
+
+  describe "MultIdentity verification" $ do
+    it "returns true for integers mod 7 over addition and multiplication." $ do
+      ver (MultInvertibility (+) (*) n7) `shouldBe` True
+    it "returns false for integers mod 7 over addition and subtraction." $ do
+      ver (MultInvertibility (+) (-) n7) `shouldBe` False
