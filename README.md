@@ -4,6 +4,8 @@ This library provides types for various algebraic structures and properties and 
 
 It really isn't meant to be useful for anything other than solidifying my understanding of things.
 
+### Usage
+
 **Build and test**
 ```sh
 stack build
@@ -32,7 +34,7 @@ ver $ Group (+) n7
 -- True
 ```
 
-The following properties and structures are currently supported:
+### Supported Structures
 
 **Properties**
 - Closure
