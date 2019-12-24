@@ -2,7 +2,7 @@
 
 This library provides types for various algebraic structures and properties and allows you to easily verify them (if reasonably small).
 
-It really meant to be useful for anything other than solidifying my understanding of things.
+It really isn't meant to be useful for anything other than solidifying my understanding of things.
 
 **Build and test**
 ```sh
