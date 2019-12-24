@@ -56,7 +56,7 @@ spec = do
     it "returns false for integers mod 7 over addition and addition." $ do
       ver (AbsorbingZero (+) (+) n7) `shouldBe` False
 
-  describe "MultIdentity verification" $ do
+  describe "MultInvertibility verification" $ do
     it "returns true for integers mod 7 over addition and multiplication." $ do
       ver (MultInvertibility (+) (*) n7) `shouldBe` True
     it "returns false for integers mod 7 over addition and subtraction." $ do
