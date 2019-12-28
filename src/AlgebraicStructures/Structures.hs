@@ -1,5 +1,6 @@
 module AlgebraicStructures.Structures (
-  GroupLike(..)
+  GroupLike(..),
+  RingLike(..)
 ) where
 
 import AlgebraicStructures.Properties
