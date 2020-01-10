@@ -1,9 +1,11 @@
 module AlgebraicStructures.Structures (
   GroupLike(..),
-  RingLike(..)
+  RingLike(..),
+  subgroups
 ) where
 
 import AlgebraicStructures.Properties
+import AlgebraicStructures.Operations
 import AlgebraicStructures.Base
 
 data GroupLike a =
@@ -45,3 +47,5 @@ instance Eq a => Ver (RingLike a) where
                              all ver [Distributivity (+) (*) d, Idempotency (*) d]
   ver (Field    (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
                              all ver [Distributivity (+) (*) d, MultInvertibility (+) (*) d]
+
+subgroups (Group (+) d) = substructures (Group (+)) d
