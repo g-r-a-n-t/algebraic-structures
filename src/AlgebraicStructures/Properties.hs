@@ -3,9 +3,8 @@ module AlgebraicStructures.Properties (
 ) where
 
 import AlgebraicStructures.Base
+import AlgebraicStructures.Operations
 import Data.Maybe
-import Data.List
-import GHC.Integer
 
 data Property a =
   Closure           (a -> a -> a) [a] |
@@ -30,21 +29,4 @@ instance Eq a => Ver (Property a) where
   ver (AbsorbingZero     (+) (*) d) = fmap (\e -> all (\a -> e * a == e) d) (identity (+) d) == Just True
   ver (JacobiIdentity    (+) (*) d) = fmap (\e -> and [(a * (b * c)) + (b * (c * a)) + (c * (a * b)) == e | a <- d, b <- d, c <- d]) (identity (+) d) == Just True
   ver (MultInvertibility (+) (*) d) = fmap (\e -> ver (Invertibility (*) (filter (/=e) d))) (identity (+) d) == Just True
-
-identity :: Eq a => (a -> a -> a) -> [a] -> Maybe a
-identity (+) d = find (\e -> all (\a -> e + a == a && a + e == a) d) d
-
-generate :: Eq a => a -> (a -> a -> a) -> [a]
-generate = generateBounded (-1)
-
-generateBounded :: Eq a => Integer -> a -> (a -> a -> a) -> [a]
-generateBounded = generateBounded' []
-
-generateBounded' :: Eq a => [a] -> Integer -> a -> (a -> a -> a) -> [a]
-generateBounded' _  0 _ _ = []
-generateBounded' [] _ a _ = [a]
-generateBounded' d n a (+)
-  | a == a'   = d
-  | otherwise = generateBounded' (a' : d) (minusInteger n 1) a (+)
-  where a' = a + last d
 
