@@ -52,7 +52,7 @@ ver $ Group (+) n7
 Furthermore, we can test theorems in some cases, but not absolutely prove them.
 
 ```haskell
--- Every subgroup of a cyclic group is cyclic. 
+-- Every subgroup of a cyclic group is cyclic.
 ver (Theorem_4_10 g) = all (\(Group (+) d) -> ver $ Cyclical (+) d) (subgroups g)
 ```
 
@@ -86,6 +86,15 @@ data GroupLike a =
   Group        (a -> a -> a) [a] |
   AbelianGroup (a -> a -> a) [a] |
   Semilattice  (a -> a -> a) [a]
+
+data RingLike a =
+  Semiring (a -> a -> a) (a -> a -> a) [a] |
+  Nearring (a -> a -> a) (a -> a -> a) [a] |
+  Ring     (a -> a -> a) (a -> a -> a) [a] |
+  LieRing  (a -> a -> a) (a -> a -> a) [a] |
+  BoolRing (a -> a -> a) (a -> a -> a) [a] |
+  Field    (a -> a -> a) (a -> a -> a) [a]
+
 
 data Theorem a =
   Theorem_4_10 (GroupLike a)
