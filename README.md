@@ -52,6 +52,7 @@ ver $ Group (+) n7
 Furthermore, we can test theorems in some cases, but not absolutely prove them.
 
 ```haskell
+-- Every subgroup of a cyclic group is cyclic. 
 ver (Theorem_4_10 g) = all (\(Group (+) d) -> ver $ Cyclical (+) d) (subgroups g)
 ```
 
