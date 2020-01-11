@@ -1,18 +1,33 @@
 ## Algebraic Structures
 
-This library provides types for various algebraic structures and properties and allows you to easily verify them (if reasonably small).
+This library provides tools for working with finite algebraic structures. It is not built for any practical reasons and serves mostly for my (g-r-a-n-t's) personal education.
 
-It really isn't meant to be useful for anything other than solidifying my understanding of things.
+### Overview
+
+This project has three main modules:
+
+- Properties
+- Structures
+- Theorems
+
+The properties module consists of basic properties that can be attributed to operations over finite domains. For example: *associativity*, *commutativity*, and *invertiblity*.
+
+The structures module provides structures that contain certain properties. For example: *group*, *field*, and *ring*.
+
+The theorem module provides theorems that make claims about structures and their properties. For example: *Every subgroup of a cyclic group is cyclic.*
+
+Properties and structures are all verifiable, meaning you can prove them using brute force.
 
 ### Usage
 
 **Build and test**
+
 ```sh
 stack build
 stack test
 ```
 
-The structure and property types provided here are both instances of a typeclass called *Ver*. The Ver typeclass contains a function `ver` (`a -> Bool`) which verifies the integrity of its underlying value.
+The structure, property, and theorem types provided here are instances of a typeclass called *Ver*. The Ver typeclass contains a function `ver` (`a -> Bool`) which verifies the integrity of its underlying value.
 
 Take for example the associative property. If we have some function and a finite domain, we can verify that the associative property holds over all elements.
 
@@ -34,45 +49,43 @@ ver $ Group (+) n7
 -- True
 ```
 
-### Supported Structures
-
-**Properties**
-- Closure
-- Associativity
-- Commutativity
-- Identity
-- Invertibility
-- Idempotency
-- Distributivity
-- AbsorbingZero
-- MultInvertibility
-
-**Mappings**
-- Injective
-- Surjective
-- Bijective
-
-**Group-like structures:**
-- Magma
-- Semigroup
-- Monoid
-- Group
-- AbelianGroup
-- Semilattice
-
-**Ring-like structures:**
-- Semiring
-- Nearring
-- Ring
-- LieRing
-- BoolRing
-- Field
-
-The qualities of these structures can easily be understood by looking at the source, which is why using a declarative language is useful here.
-
-Take a ring for example:
+Furthermore, we can test theorems in some cases, but not absolutely prove them.
 
 ```haskell
-ver (Ring (+) (*) d) = all ver [AbelianGroup (+) d, Monoid (*) d] &&
-                       all ver [Distributivity (+) (*) d, AbsorbingZero (+) (*) d]
+ver (Theorem_4_10 g) = all (\(Group (+) d) -> ver $ Cyclical (+) d) (subgroups g)
+```
+
+Theorem names refer to the following [text](http://abstract.ups.edu/download/aata-20180801.pdf)
+
+### Supported Types
+
+```haskell
+data Mapping a b =
+  Injective  (a -> b) [a] [b] |
+  Surjective (a -> b) [a] [b] |
+  Bijective  (a -> b) [a] [b]
+
+data Property a =
+  Closure           (a -> a -> a) [a] |
+  Associativity     (a -> a -> a) [a] |
+  Commutativity     (a -> a -> a) [a] |
+  Identity          (a -> a -> a) [a] |
+  Invertibility     (a -> a -> a) [a] |
+  Idempotency       (a -> a -> a) [a] |
+  Cyclical          (a -> a -> a) [a] |
+  Distributivity    (a -> a -> a) (a -> a -> a) [a] |
+  AbsorbingZero     (a -> a -> a) (a -> a -> a) [a] |
+  JacobiIdentity    (a -> a -> a) (a -> a -> a) [a] |
+  MultInvertibility (a -> a -> a) (a -> a -> a) [a]
+
+data GroupLike a =
+  Magma        (a -> a -> a) [a] |
+  Semigroup    (a -> a -> a) [a] |
+  Monoid       (a -> a -> a) [a] |
+  Group        (a -> a -> a) [a] |
+  AbelianGroup (a -> a -> a) [a] |
+  Semilattice  (a -> a -> a) [a]
+
+data Theorem a =
+  Theorem_4_10 (GroupLike a)
 ```
