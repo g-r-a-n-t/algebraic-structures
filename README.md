@@ -95,6 +95,10 @@ data RingLike a =
   BoolRing (a -> a -> a) (a -> a -> a) [a] |
   Field    (a -> a -> a) (a -> a -> a) [a]
 
+data Morphism a b =
+    Homomorphism (a -> a -> a) (b -> b -> b) [a] [b] (a -> b) |
+    Isomorphism  (a -> a -> a) (b -> b -> b) [a] [b] (a -> b)
+
 data Theorem a =
   Theorem_4_10 (GroupLike a)
 ```
