@@ -4,6 +4,7 @@ module AlgebraicStructures.Structures (
   subgroups
 ) where
 
+import Data.Maybe
 import AlgebraicStructures.Properties
 import AlgebraicStructures.Operations
 import AlgebraicStructures.Base
@@ -26,6 +27,9 @@ data RingLike a =
   BoolRing (a -> a -> a) (a -> a -> a) [a] |
   Field    (a -> a -> a) (a -> a -> a) [a]
 
+data ModuleLike a b =
+  LeftModule (GroupLike a) (RingLike b) (b -> a -> a)
+
 instance Eq a => Ver (GroupLike a) where
   ver (Magma        (+) d) = all ver [Closure (+) d]
   ver (Semigroup    (+) d) = all ver [Closure (+) d, Associativity (+) d]
@@ -47,5 +51,13 @@ instance Eq a => Ver (RingLike a) where
                              all ver [Distributivity (+) (*) d, Idempotency (*) d]
   ver (Field    (+) (*) d) = all ver [AbelianGroup (+) d, Magma (*) d] &&
                              all ver [Distributivity (+) (*) d, MultInvertibility (+) (*) d]
+
+instance (Eq a, Eq b) => Ver (ModuleLike a b) where
+  ver (LeftModule (Group (+) m) (Ring (++) (*) _r) (**)) =
+    and [ r ** (x + y) == (r ** x) + (r ** y) | x <- m, y <- m, r <- _r ] &&
+    and [(r ++ s) ** x == (r ** x) + (s ** x) | r <- _r, s <- _r, x <- m] &&
+    and [(r * s) ** x == r ** (s ** x)        | r <- _r, s <- _r, x <- m] &&
+    and [e ** x == x | x <- m]
+    where e = fromJust (multIdentity (++) (*) _r)
 
 subgroups (Group (+) d) = substructures (Group (+)) d

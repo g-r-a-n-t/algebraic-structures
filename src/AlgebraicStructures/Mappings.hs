@@ -19,9 +19,9 @@ instance (Eq a, Eq b) => Ver (Mapping a b) where
   ver (Bijective f a b)  = ver (Injective f a b) && ver (Surjective f a b)
 
 data Morphism a b =
-    Homomorphism (a -> a -> a) (b -> b -> b) [a] [b] (a -> b) |
-    Isomorphism  (a -> a -> a) (b -> b -> b) [a] [b] (a -> b)
+  Homomorphism (a -> a -> a) (b -> b -> b) (a -> b) [a] [b] |
+  Isomorphism  (a -> a -> a) (b -> b -> b) (a -> b) [a] [b]
 
 instance (Eq a, Eq b) => Ver (Morphism a b) where
-    ver (Homomorphism (+) (*) a b f) = and [f (x + y) == (f x) * (f y) && f (x + y) `elem` b | x <- a, y <- a]
-    ver (Isomorphism  (+) (*) a b f) = ver (Homomorphism (+) (*) a b f) && ver (Bijective f a b)
+  ver (Homomorphism (+) (*) f a b) = and [f (x + y) == (f x) * (f y) && f (x + y) `elem` b | x <- a, y <- a]
+  ver (Isomorphism  (+) (*) f a b) = ver (Homomorphism (+) (*) f a b) && ver (Bijective f a b)

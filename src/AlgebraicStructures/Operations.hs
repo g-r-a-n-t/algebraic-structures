@@ -1,5 +1,6 @@
 module AlgebraicStructures.Operations (
   identity,
+  multIdentity,
   generate,
   generateBounded,
   substructures
@@ -11,6 +12,9 @@ import GHC.Integer
 
 identity :: Eq a => (a -> a -> a) -> [a] -> Maybe a
 identity (+) d = find (\e -> all (\a -> e + a == a && a + e == a) d) d
+
+multIdentity :: Eq a => (a -> a -> a) -> (a -> a -> a) -> [a] -> Maybe a
+multIdentity (+) (*) d = (\d' -> identity (*) d') =<< (fmap (\e -> filter (/= e) d) (identity (+) d))
 
 generate :: Eq a => (a -> a -> a) -> a -> [a]
 generate = generateBounded (-1)
