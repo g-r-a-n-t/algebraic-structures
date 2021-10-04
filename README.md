@@ -10,7 +10,7 @@ This project has three main modules:
 - Structures
 - Theorems
 
-The properties module consists of basic properties that can be attributed to operations over finite domains. For example: *associativity*, *commutativity*, and *invertiblity*.
+The properties module consists of basic properties that can be attributed to operations over finite domains. For example, *associativity*, *commutativity*, and *invertiblity*.
 
 The structures module provides structures that contain certain properties. For example: *group*, *field*, and *ring*.
 
@@ -29,7 +29,7 @@ stack test
 
 The structure, property, and theorem types provided here are instances of a typeclass called *Ver*. The Ver typeclass contains a function `ver` (`a -> Bool`) which verifies the integrity of its underlying value.
 
-Take for example the associative property. If we have some function and a finite domain, we can verify that the associative property holds over all elements.
+Take for example the associative property, if we have some function and a finite domain, we can verify that the associative property holds over all elements.
 
 ```haskell
 ver (Associativity (+) d) = and [(a + b) + c == a + (b + c) | a <- d, b <- d, c <- d]
@@ -41,7 +41,7 @@ We can take this property along with others and construct structures that are al
 ver (Group (+) d) = all ver [Closure (+) d, Associativity (+) d, Identity (+) d, Invertibility (+) d]
 ```
 
-In practice this can be used to verify something like the group integers modulo 7 over addition.
+In practice, this can be used to verify something like the group integers modulo 7 over addition.
 
 ```haskell
 n7 = [0..6] :: [Mod Integer 7]
